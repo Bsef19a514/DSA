@@ -72,11 +72,77 @@ public class numberSystem {
                 bitNo++;
             }
         }
+        // edge case
         else if(x==0){
             return 1;
         }
         return result;
     }
+
+    // optimised solution
+    public static int complement_Sol2(int n){
+        // edge case
+        if(n==0){
+            return 1;
+        }
+        // 1) Find not of n
+        // 2) making the mask 
+        // 3) And the not of n with mask
+
+        //making the mask (mask is like 000000000111 )
+        int m=n;
+        int mask=0;
+        while(m!=0){
+            System.out.println("while: "+m);
+            m=m>>1; //right shift bits of m 1 time
+            mask=mask<<1; //shifting bits of mask to the left 1 time
+            mask=mask|1; //performing mask OR 1
+        }
+        //finding not of n
+        int notN=~n;
+        //And notN with mask
+        int compliment= notN & mask;
+        return compliment;
+    }
+
+    //problem 4: Given a number find whetther it is the power of 2 or not.
+    //leetcode: 231
+    public static boolean isPowerOfTwo(int n) {
+        int reminder=0;
+        if(n<1){
+            return false;
+        }
+        while(n>1 & reminder==0){
+            reminder=n%2;
+            n=n/2;
+        }
+        
+        if(reminder==1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    //optimised solutoin:
+    public static boolean isPowerOfTwo_Sol2(int n) {
+        if(n<1){
+            return false;
+        }
+        /*  A number is exp of 2 if N AND N-1 is 0.
+        Example:
+        N = 4 
+        4 in binary = 100
+        N-1 => 4-1 => 3 in binary = 11
+         now, (4 & (3)) => will be equal to 0, thats why N = 4 is a power of 2.*/
+        int result=n & n-1;
+        if(result==0){
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
+
    public static void main(String[] args) {
         numberSystem.problem1(29);
         System.out.println("-------------------");
@@ -87,5 +153,11 @@ public class numberSystem {
         System.out.println("-------------------");
         int comp= numberSystem.complement(0);
         System.out.println(comp);
+        System.out.println("-------------------");
+        int res= numberSystem.complement_Sol2(1);
+        System.out.println("Compliment is: "+res);
+        System.out.println("-------------------");
+        System.out.println(numberSystem.isPowerOfTwo(128));
+        System.out.println(numberSystem.isPowerOfTwo_Sol2(256));
     }
 }
