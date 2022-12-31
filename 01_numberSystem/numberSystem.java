@@ -105,7 +105,7 @@ public class numberSystem {
         return compliment;
     }
 
-    //problem 4: Given a number find whetther it is the power of 2 or not.
+    //problem 4: Given a number find whether it is the power of 2 or not.
     //leetcode: 231
     public static boolean isPowerOfTwo(int n) {
         int reminder=0;
@@ -143,6 +143,95 @@ public class numberSystem {
         
     }
 
+    //problem 5:
+    public static void coinChangeProblem(int amount){
+        int c1=100;
+        int c2=50;
+        int c3=20;
+        int c4=10;
+        int c5=1;
+        int notes=0;
+        if(amount>=c1){
+            notes=amount/c1;
+            amount=amount%c1;
+            System.out.println(notes+" notes of "+c1+" are needded");
+        }
+        if(amount>=c2){
+            notes=amount/c2;
+            amount=amount%c2;
+            System.out.println(notes+" notes of "+c2+" are needded");
+        }
+        if(amount>=c3){
+            notes=amount/c3;
+            amount=amount%c3;
+            System.out.println(notes+" notes of "+c3+" are needded");
+        }
+        if(amount>=c4){
+            notes=amount/c4;
+            amount=amount%c4;
+            System.out.println(notes+" notes of "+c4+" are needded");
+        }
+        if(amount>=c5){
+            notes=amount/c5;
+            amount=amount%c5;
+            System.out.println(notes+" notes of "+c5+" are needded");
+        }
+    }
+
+    // Problem 6: Find factorial of a number using recursion.
+    public static int factorial(int n){
+        if(n==1 ||n==0){
+            return 1;
+        }
+        return n*factorial(n-1);
+    }
+
+    // Problem 7: You are given two numbers n and r. Find nCr?
+    public static int nCr(int n, int r){
+        if(n>0 && n>=r){
+            int nfactorial=numberSystem.factorial(n);
+            int rfactorial=numberSystem.factorial(r);
+            int n_rFactorial=numberSystem.factorial(n-r);
+            int result=nfactorial/(rfactorial*n_rFactorial);
+            return result;
+        }else{
+            return 0;
+        }
+    }
+
+    //Problem 8: Find total number of set bits in n
+    public static int countSetBits(int n){
+        //converting the number into binary
+        if(n>=0){
+            int quotient=0;
+            int reminder=0;
+            int count=0;
+            while (n>=1) {
+                if(n%2==1){
+                    count++;
+                }
+                n=n/2;
+            }
+            return count;
+        }
+        //edge case
+        else{
+            return -1;
+        }
+    }
+
+    //Problem 9: Find the value of nth item in fibonaci series using recursion.
+    public static int fibonaciValue(int n){
+        if(n==1){
+            return 0;
+        }
+        if(n==2){
+            return 1;
+        }
+        
+        return fibonaciValue(n-1)+fibonaciValue(n-2);
+    } 
+
    public static void main(String[] args) {
         numberSystem.problem1(29);
         System.out.println("-------------------");
@@ -158,6 +247,21 @@ public class numberSystem {
         System.out.println("Compliment is: "+res);
         System.out.println("-------------------");
         System.out.println(numberSystem.isPowerOfTwo(128));
+        System.out.println("-------------------");
         System.out.println(numberSystem.isPowerOfTwo_Sol2(256));
+        System.out.println("-------------------");
+        numberSystem.coinChangeProblem(1);
+        System.out.println("-------------------");
+        int fact=numberSystem.factorial(3);
+        System.out.println(fact);
+        System.out.println("-------------------");
+        int ncr=numberSystem.nCr(5,3);
+        System.out.println(ncr);
+        System.out.println("-------------------");
+        int count=numberSystem.countSetBits(-1);
+        System.out.println(count);
+        System.out.println("-------------------");
+        int value=numberSystem.fibonaciValue(5);
+        System.out.println(value);
     }
 }
