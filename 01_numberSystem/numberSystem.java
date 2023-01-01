@@ -248,7 +248,7 @@ public class numberSystem {
         System.out.println("-------------------");
         System.out.println(numberSystem.isPowerOfTwo(128));
         System.out.println("-------------------");
-        System.out.println(numberSystem.isPowerOfTwo_Sol2(256));
+        System.out.println(numberSystem.isPowerOfTwo_Sol2(6));
         System.out.println("-------------------");
         numberSystem.coinChangeProblem(1);
         System.out.println("-------------------");
