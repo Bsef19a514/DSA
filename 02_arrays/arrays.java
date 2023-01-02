@@ -11,6 +11,12 @@ public class arrays {
         }
         System.out.println();
     }
+    public static void printList(List<Integer> list) {
+        for(int i=0;i<list.size();i++){
+            System.out.print(list.get(i)+" ");
+        }
+        System.out.println();
+    }
 
     //Problem 10: Find the min and max value in an array in O(N)
     public static void minMax(int[]a){
@@ -145,6 +151,29 @@ public class arrays {
         }
         return -1;
     }
+    /* Leetcode 442:
+     * Given an integer array nums of length n where all the integers of nums are in the range [1, n]
+     * and each integer appears once or twice, return an array of all the integers that appears twice.
+     * You must write an algorithm that runs in O(n) time and uses only constant extra space. */
+    public static List<Integer> duplicateAll(int[]arr){
+        List<Integer> duplicates=new ArrayList<Integer>();
+        int value;
+        int targetIndex;
+        for(int i=0;i<arr.length;i++){
+            value=arr[i];
+            if(value<0){ //if value at current index is negatice  then making it positive.
+                value=-value;
+            }
+            targetIndex=value-1;
+            if(arr[targetIndex]<0){ //if value at target index is negative then it means it is already visited.
+                duplicates.add(value);
+            }else{
+                System.out.println("New value at index "+targetIndex+" is: "+(-arr[targetIndex]));
+                arr[targetIndex]=-arr[targetIndex];
+            }
+        }
+        return duplicates;
+    }
     public static void main(String[] args) {
         int a[]={4,2,3,1,5,6,7,2,9,3};
         arrays.minMax(a);
@@ -170,6 +199,11 @@ public class arrays {
         int d[]={4,1,56,2,8,3,2};
         int dup2=genericDuplicate(d);
         System.out.println("Duplicate element is: "+ dup2);
+        System.out.println("----------------------------");
+        int e[]={4,3,2,8,2,3,1,5};
+        List<Integer> dup3=duplicateAll(e);
+        printList(dup3);
+        System.out.println("----------------------------");
         
     }
 }
