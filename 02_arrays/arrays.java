@@ -151,6 +151,8 @@ public class arrays {
         }
         return -1;
     }
+
+    //Problem 16:
     /* Leetcode 442:
      * Given an integer array nums of length n where all the integers of nums are in the range [1, n]
      * and each integer appears once or twice, return an array of all the integers that appears twice.
@@ -168,11 +170,95 @@ public class arrays {
             if(arr[targetIndex]<0){ //if value at target index is negative then it means it is already visited.
                 duplicates.add(value);
             }else{
-                System.out.println("New value at index "+targetIndex+" is: "+(-arr[targetIndex]));
                 arr[targetIndex]=-arr[targetIndex];
             }
         }
         return duplicates;
+    }
+    //Problem 17:
+    //You are given two arrays A and B of size N amd M. Both arrays are sorted in increasing order.
+    // Return an array containing elements that are common in both A and B.
+
+    //Using binary search --> Time Complexity O(n log m)
+    public static List<Integer> arrayIntersection(int[]A,int[]B){
+        List<Integer> result=new ArrayList<Integer>();
+
+        int index;
+        if(A.length>B.length){
+            for(int i =0;i<B.length;i++){
+                index=BinarySearch(A, B[i]);
+                if(index!=-1){
+                    A[index]=-A[index];
+                    result.add(B[i]);
+                }
+            }
+        }else{
+            for(int i =0;i<A.length;i++){
+                index=BinarySearch(B, A[i]);
+                if(index!=-1){
+                    B[index]=-B[index];
+                    result.add(A[i]);
+                }
+            }
+        }
+        return result;
+    } 
+    public static int BinarySearch(int[]arr,int e){
+        int start=0;
+        int end=arr.length-1;
+        int mid=(end+start)/2;
+        while(start<=end){
+            if(e==arr[mid]){
+                return mid;
+            }
+            else if(e<arr[mid]){//searching in left sub-array
+                end=mid-1;
+                mid=(end+start)/2;
+            }
+            else if(e>arr[mid]){//searching in right sub-array
+                start=mid+1;
+                mid=(end+start)/2;
+            }
+        }
+        return -1;
+    }
+
+    //Solution 2:
+    //Using two pointer --> Time Complexity O(n) or O(m)
+    public static List<Integer> arrayIntersectionSol2(int[]A,int[]B){
+        List<Integer> result=new ArrayList<Integer>();
+        int p1=0;
+        int p2=0;
+        if(A.length>B.length){
+            while(p1<A.length||p2<B.length){
+                // System.out.println("Comparing B's "+B[p2]+" with A's "+A[p1]);
+                if(A[p1]==B[p2]){
+                    result.add(A[p1]);
+                    p1++;
+                    p2++;
+                }
+                else if(A[p1]<B[p2]){
+                    p1++;
+                }else{
+                    p2++;
+                }
+            }
+        }else{
+            while(p1<A.length||p2<B.length){
+                // System.out.println("Comparing A's  "+A[p1]+" with B's "+B[p2]);
+                if(A[p1]==B[p2]){
+                    result.add(A[p1]);
+                    p1++;
+                    p2++;
+                }
+                else if(A[p1]<B[p2]){
+                    p1++;
+                }else{
+                    p2++;
+                }
+            }
+        }
+        return result;
     }
     public static void main(String[] args) {
         int a[]={4,2,3,1,5,6,7,2,9,3};
@@ -204,6 +290,17 @@ public class arrays {
         List<Integer> dup3=duplicateAll(e);
         printList(dup3);
         System.out.println("----------------------------");
-        
+        int[]f={3,3,4,5,8,8};
+        int index=BinarySearch(f,8);
+        System.out.println(index);
+        System.out.println("----------------------------");
+        int[]g={1,2,2,3,6,7,8,9};
+        List<Integer> common=arrayIntersection(f, g);
+        printList(common);
+        System.out.println("----------------------------");
+        int[]h={2,3,3,5,8,9};
+        int[]i={1,2,2,3,6,7,8,9};
+        List<Integer> common2=arrayIntersectionSol2(h, i);
+        printList(common2);
     }
 }
