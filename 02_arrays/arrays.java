@@ -306,15 +306,12 @@ public class arrays {
             System.out.println(arr[0]+" , "+arr[1]);
         }
     }
-    //Problem 19: Sort 012: Given an array which only contains 0s 1s and 2s sort the array in O(N)
+    //Problem 19: Sort 01: Given an array which only contains 0s and 1s. sort the array in O(N)
     public static int[] sort01(int[]arr){
         int p0=0;
         int p1=arr.length-1;
         
-        System.out.println("p0: "+p0+" p1: "+p1);
-        System.out.println("------------------------");
         while(p0<p1){
-            System.out.println("p0: "+p0+" p1: "+p1);
             if(arr[p0]==0 && arr[p1]==1){
                 p0++;
                 p1--;
@@ -331,7 +328,40 @@ public class arrays {
             }
         }
         return arr;
-    } 
+    }
+    
+     //Problem 20: Sort 012: Given an array which only contains 0s 1s and 2s. sort the array in O(N)
+     /* Solution1: using any sorting algorithm like heap, merge, count. Time complexity O(n log n)
+      * Solution2: first iteration over the array and get count of each value. Then make a new array and store the values according to their counts.
+      * Time complexity: 2 O(n) as two loop are being used. 2O(n) ~~  O(n)
+      * Solution 3: Thre pointer approach: iteration single time . Time complexity --> O(n)
+      */
+    public static int[] sort012(int[] arr){
+        int p0=0;
+        int p2=arr.length-1;
+        int current=0;
+        while(current<=p2){
+            //if current element is 0
+            if(arr[current]==0){
+                //push it to the start of array
+                swap(arr, p0, current);
+                p0++; //move zero pointer 1 step forward
+                current++; //move zero pointer 1 step forward
+            }
+            //if current element is 2
+            else if(arr[current]==2){
+                //push it to the end of array
+                swap(arr, p2, current);
+                p2--; //move zero pointer 1 step (backward) towards head     
+            }
+            //if current element is 1
+            else{
+                current++;
+            }
+        }
+        return arr;
+    }
+    //Problem 20: Sort 012
     public static void main(String[] args) {
         int a[]={4,2,3,1,5,6,7,2,9,3};
         arrays.minMax(a);
@@ -383,7 +413,11 @@ public class arrays {
         int []zeroOne={1,1,0,1,0,1,0,1};     
         int sortedarr[]=sort01(zeroOne);
         printArray(sortedarr);
-
-
+        System.out.println("----------------------------");
+        int []zeroOneTwo={0, 1 ,1 ,0 ,0 ,1 ,1 ,0 ,1 ,0};     
+        int sortarr2[]=sort012(zeroOneTwo);
+        printArray(sortarr2);
+//0 0 0 1 2 1 1 1 1 2 2 2
+//{2,1,2,1,0,0,0,1,2,1,1,2};
     }
 }
