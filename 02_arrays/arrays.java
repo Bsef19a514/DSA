@@ -1,3 +1,4 @@
+import java.sql.Array;
 import java.util.*;  
 public class arrays {
     public static void swap(int[]arr,int x,int y) {
@@ -186,7 +187,7 @@ public class arrays {
         int index;
         if(A.length>B.length){
             for(int i =0;i<B.length;i++){
-                index=BinarySearch(A, B[i]);
+                index=BinarySearch(A, B[i],0,A.length-1);
                 if(index!=-1){
                     A[index]=-A[index];
                     result.add(B[i]);
@@ -194,7 +195,7 @@ public class arrays {
             }
         }else{
             for(int i =0;i<A.length;i++){
-                index=BinarySearch(B, A[i]);
+                index=BinarySearch(B, A[i],0,A.length-1);
                 if(index!=-1){
                     B[index]=-B[index];
                     result.add(A[i]);
@@ -203,9 +204,9 @@ public class arrays {
         }
         return result;
     } 
-    public static int BinarySearch(int[]arr,int e){
-        int start=0;
-        int end=arr.length-1;
+    public static int BinarySearch(int[]arr,int e,int s, int l){
+        int start=s;
+        int end=l;
         int mid=(end+start)/2;
         while(start<=end){
             if(e==arr[mid]){
@@ -260,6 +261,77 @@ public class arrays {
         }
         return result;
     }
+    //Problem 18: You are given an array of integers and a value V. Your need to find pairs whose sum is equal to the given value V.
+    //Example Arr=[1,4,3,7,9,6], value=10 result=[[1,9],[3,7]] as sum of 1+9=10 and 3,7=10
+    public  static List<int[]> pairSum(int[] arr, int s) {
+        
+        List<int[]> list=new ArrayList<int[]>();
+        int firstVal;
+        int secValIndex;
+        int secVal;
+
+        Arrays.sort(arr);
+        for(int i=0;i<arr.length;i++){
+            int []pair={0,0};
+            firstVal=arr[i];
+            secValIndex=BinarySearch(arr, s-arr[i],i+1,arr.length-1);
+
+            // if 2nd value founds in arr
+            if(secValIndex>-1 && secValIndex!=i){
+                secVal=arr[secValIndex];
+                if(firstVal<secVal){
+                    pair[0]=firstVal;
+                    pair[1]=secVal;
+                }else{
+                    pair[0]=secVal;
+                    pair[1]=firstVal;
+                }
+
+                if((!list.isEmpty()) && pair[0]<list.get(list.size()-1)[0]){
+                    list.add(list.size(),list.get(list.size()-1));
+                    list.add(list.size()-1,pair);
+                }else{
+                    list.add(pair);
+                }
+                
+            } 
+        }       
+        return list;
+    }
+
+    public static void printListOfArrays(List<int[]> list){
+        int[] arr;
+        for(int i=0;i<list.size();i++){
+            arr=list.get(i);
+            System.out.println(arr[0]+" , "+arr[1]);
+        }
+    }
+    //Problem 19: Sort 012: Given an array which only contains 0s 1s and 2s sort the array in O(N)
+    public static int[] sort01(int[]arr){
+        int p0=0;
+        int p1=arr.length-1;
+        
+        System.out.println("p0: "+p0+" p1: "+p1);
+        System.out.println("------------------------");
+        while(p0<p1){
+            System.out.println("p0: "+p0+" p1: "+p1);
+            if(arr[p0]==0 && arr[p1]==1){
+                p0++;
+                p1--;
+            }
+            else if(arr[p0]==1 && arr[p1]==0){
+                swap(arr, p0, p1);
+                p0++;
+                p1--;
+            }
+            else if(arr[p0]==1 && arr[p1]==1){
+                p1--;
+            }else if(arr[p0]==0 && arr[p1]==0){
+                p0++;
+            }
+        }
+        return arr;
+    } 
     public static void main(String[] args) {
         int a[]={4,2,3,1,5,6,7,2,9,3};
         arrays.minMax(a);
@@ -291,7 +363,7 @@ public class arrays {
         printList(dup3);
         System.out.println("----------------------------");
         int[]f={3,3,4,5,8,8};
-        int index=BinarySearch(f,8);
+        int index=BinarySearch(f,8,0,f.length);
         System.out.println(index);
         System.out.println("----------------------------");
         int[]g={1,2,2,3,6,7,8,9};
@@ -302,5 +374,16 @@ public class arrays {
         int[]i={1,2,2,3,6,7,8,9};
         List<Integer> common2=arrayIntersectionSol2(h, i);
         printList(common2);
+        System.out.println("----------------------------");
+        int[] j={2,-3,3,3,-2};
+        List<int[]> result=pairSum(j, 0);
+        System.out.println("List contains: "+result.size()+ " arrays.");
+        printListOfArrays(result);
+        System.out.println("----------------------------");
+        int []zeroOne={1,1,0,1,0,1,0,1};     
+        int sortedarr[]=sort01(zeroOne);
+        printArray(sortedarr);
+
+
     }
 }
