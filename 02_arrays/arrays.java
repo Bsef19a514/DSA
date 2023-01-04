@@ -19,6 +19,25 @@ public class arrays {
         System.out.println();
     }
 
+    public static int BinarySearch(int[]arr,int e,int s, int l){
+        int start=s;
+        int end=l;
+        int mid=(end+start)/2; // or mid= start + (end-start)/2 if our array size is two large than start+end will result an error that sum is exceeding the int range. 
+        while(start<=end){
+            if(e==arr[mid]){
+                return mid;
+            }
+            else if(e<arr[mid]){//searching in left sub-array
+                end=mid-1;
+            }
+            else if(e>arr[mid]){//searching in right sub-array
+                start=mid+1;
+            }
+            mid=(end+start)/2;
+        }
+        return -1;
+    }
+
     //Problem 10: Find the min and max value in an array in O(N)
     public static void minMax(int[]a){
         int min=a[0];
@@ -204,25 +223,7 @@ public class arrays {
         }
         return result;
     } 
-    public static int BinarySearch(int[]arr,int e,int s, int l){
-        int start=s;
-        int end=l;
-        int mid=(end+start)/2;
-        while(start<=end){
-            if(e==arr[mid]){
-                return mid;
-            }
-            else if(e<arr[mid]){//searching in left sub-array
-                end=mid-1;
-                mid=(end+start)/2;
-            }
-            else if(e>arr[mid]){//searching in right sub-array
-                start=mid+1;
-                mid=(end+start)/2;
-            }
-        }
-        return -1;
-    }
+    
 
     //Solution 2:
     //Using two pointer --> Time Complexity O(n) or O(m)
