@@ -206,6 +206,73 @@ public class search {
         }
         return -1;
     }
+    public static int sqrtN(long N) {
+		
+		long start=0;
+        long end=(int)N;
+        long mid=start+((end-start)/2);
+        long ans=-1;
+        while(start<=end){
+            if(mid*mid==N){
+                return (int)mid;
+            }else if(mid*mid<N){
+                ans=mid;
+                start=mid+1;
+            }else{
+                end=mid-1;
+            }
+            mid=start+((end-start)/2);
+        }
+        return (int)ans;
+		
+	}
+    //Problem 27: find sqrt og a number in O(log n) time.
+    public static double findSqrtWithDecimalPoint(int N){
+        //for integral part
+        long start=0;
+        long end=(int)N;
+        long mid=start+((end-start)/2);
+        double integralValue=-1;
+        while(start<=end){
+            if(mid*mid==N){
+                return mid;
+            }else if(mid*mid<N){
+                integralValue=mid;
+                start=mid+1;
+            }else{
+                end=mid-1;
+            }
+            mid=(end+start)/2;
+        }
+        double istDecimal=getDecimalValue(N, integralValue, 0.1);
+        double secDecimal=getDecimalValue(N, istDecimal, 0.01);
+        double thirdDecimal=getDecimalValue(N, secDecimal, 0.001);
+        double forthDecimal=getDecimalValue(N,thirdDecimal, 0.0001);
+        
+        return forthDecimal;
+    }
+    public static double getDecimalValue(int target,double value,double precision){
+        int start=0;
+        int end=9;
+        int mid=(start+end)/2;
+        double ans=0;
+        double floatValue=0; 
+        while(start*precision<=end*precision){
+            floatValue=value+(mid*precision);
+           // System.out.println("Checking for "+floatValue);
+            if(floatValue*floatValue==target){
+                return floatValue;
+            }else if(floatValue*floatValue<target){
+                ans=floatValue;
+                start=mid+1;
+            }else{
+                end=mid-1;
+            }
+            mid=(start+end)/2;
+        }
+        //System.out.println("After sec decimal: "+secDecimal);
+        return ans;
+    }
     public static void main(String[] args) {
         ArrayList<Integer> arr=new ArrayList<Integer>();
         arr.add(0);
@@ -244,5 +311,10 @@ public class search {
         int target=2;
         int index6=searchInSortedAndRotatedArray(arr5, target);
         System.out.println("Index of "+ target+" is: "+index6);
+        System.out.println("----------------------------");
+        int sqrt=sqrtN(7777777);
+        System.out.println("Sqrt is: "+sqrt);
+        double sqrt2=findSqrtWithDecimalPoint(18);
+        System.out.println("Sqrt is: "+sqrt2);
     }
 }
