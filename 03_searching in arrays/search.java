@@ -108,7 +108,7 @@ public class search {
         }
         return -1;
     }
-    //Problem 24: Pivot sum
+    //Problem 24: Find Pivot index in an array. Pivot index is the index where sum of left sub array is equal to the sum of right sub array. 
     //Time complexity O(n^2)
     public static int PivotIndex(int[]arr){
         int pivot=0;
@@ -149,6 +149,63 @@ public class search {
         }
         return -1;
     }
+    //Problem 25: You are given a sorted and rotated array. You need to find the pivot index in O(log n) time complexity. such that:
+    // a=[5,7,9,1,2,3,4]----> pivot elements are 9 and 1 --> return any one index of these two eleemnts.
+    public static int pivotInSortedAndRotaedArray(int[] arr){
+        int start=0;
+        int end=arr.length-1;
+        int mid=start+(end-start)/2;
+        while(start<end){
+            if(arr[mid]>=arr[0]){
+                start=mid+1;
+            }else{
+                end=mid;
+            }
+            mid=start+(end-start)/2;
+        }
+        return start;
+    }
+    //leetcode 33:
+    //Problem 26: Find a particular element in sorted and rotaed array in O(log n).
+    public static int searchInSortedAndRotatedArray(int []nums,int target){
+        int start=0;
+        int end=nums.length-1;
+        int pivotIndex=-1;
+        //if array is not rotated
+        if(nums[end]>nums[start]||nums.length==1)
+        {
+            return BinarySearch(nums, target, start, end);
+        }
+        //if array is rotated
+        else{
+           //step 1): finding the pivot index
+            pivotIndex=pivotInSortedAndRotaedArray(nums);
+            //Step 2): Applying binary search in left and roght sub arrays. 
+            if(target>=nums[start]){
+                return BinarySearch(nums, target, start, pivotIndex-1);
+            }else{
+                return BinarySearch(nums, target, pivotIndex,end);
+            }
+        }
+    }
+    public static int BinarySearch(int[]arr,int e,int s, int l){
+        int start=s;
+        int end=l;
+        int mid=(end+start)/2; // or mid= start + (end-start)/2 if our array size is two large than start+end will result an error that sum is exceeding the int range. 
+        while(start<=end){
+            if(e==arr[mid]){
+                return mid;
+            }
+            else if(e<arr[mid]){//searching in left sub-array
+                end=mid-1;
+            }
+            else if(e>arr[mid]){//searching in right sub-array
+                start=mid+1;
+            }
+            mid=(end+start)/2;
+        }
+        return -1;
+    }
     public static void main(String[] args) {
         ArrayList<Integer> arr=new ArrayList<Integer>();
         arr.add(0);
@@ -178,5 +235,14 @@ public class search {
         int index4=PivotIndexSol2(arr3);
         System.out.println("Pivot index is: "+index3);
         System.out.println("Pivot index is: "+index4);
+        System.out.println("----------------------------");
+        int arr4[]={4,5,5,6,6,0,0,1,2};
+        int index5=pivotInSortedAndRotaedArray(arr4);
+        System.out.println("Pivot index is: "+index5);
+        System.out.println("----------------------------");
+        int arr5[]={4,5,6,7,0,1,2};
+        int target=2;
+        int index6=searchInSortedAndRotatedArray(arr5, target);
+        System.out.println("Index of "+ target+" is: "+index6);
     }
 }
