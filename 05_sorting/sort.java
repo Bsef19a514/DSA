@@ -25,16 +25,35 @@ public class sort {
             }
         }
     }
+    //cards sorting
+    public static void insertionSort(int []arr){
+        int j;
+        int temp;
+        for (int i = 0; i < arr.length; i++) {
+            temp=arr[i];
+            j=i-1;
+            while(j>=0 && arr[j]>temp){
+                arr[j+1]=arr[j];
+                j--;
+            }
+            arr[j+1]=temp;
+        }
+    }
     public static void printArray(int arr[]) {
         for(int i=0;i<arr.length;i++){
             System.out.print(arr[i]+" ");
         }
-        System.out.print(" ");
+        System.out.println(" ");
     }
     public static void main(String[] args) {
         int []arr={6,5,4,3,2,1};
+         
         bubbleSort(arr);
         printArray(arr);
-
+        int []arr2={6,5,4,3,2,1};
+        insertionSort(arr2);
+        printArray(arr2);
+        int key=Arrays.binarySearch(arr2, 0, arr2.length-1, 4);
+        System.out.println(key);
     }
 }
