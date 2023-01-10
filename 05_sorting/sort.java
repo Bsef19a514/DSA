@@ -11,9 +11,9 @@ public class sort {
         int n=arr.length;
         boolean isSwapped=false;
         for(int i=1;i<n;i++){
-            System.out.println("Round: "+i);
+           // System.out.println("Round: "+i);
             for(int j=0;j<=n-i-1;j++){
-                System.out.println("arr[j]: "+arr[j]+" arr[j+1]: "+arr[j+1]);
+                //System.out.println("arr[j]: "+arr[j]+" arr[j+1]: "+arr[j+1]);
                 if(arr[j+1]<arr[j]){
                     swap(arr,j,j+1);
                     isSwapped=true;
@@ -39,6 +39,20 @@ public class sort {
             arr[j+1]=temp;
         }
     }
+    //selection sort
+    public static void selectionSort(int[] arr) {
+        int minValueIndex;
+        for(int i=0;i<arr.length;i++){
+            minValueIndex=i;
+            for(int j=i+1;j<arr.length;j++){
+                if(arr[j]<arr[i]){
+                    minValueIndex=j;
+                }
+            }
+            System.out.println("swapping "+arr[i]+" with "+arr[minValueIndex]);
+            swap(arr,i,minValueIndex);
+        }   
+    }
     public static void printArray(int arr[]) {
         for(int i=0;i<arr.length;i++){
             System.out.print(arr[i]+" ");
@@ -47,13 +61,15 @@ public class sort {
     }
     public static void main(String[] args) {
         int []arr={6,5,4,3,2,1};
-         
         bubbleSort(arr);
         printArray(arr);
         int []arr2={6,5,4,3,2,1};
         insertionSort(arr2);
         printArray(arr2);
-        int key=Arrays.binarySearch(arr2, 0, arr2.length-1, 4);
-        System.out.println(key);
+        // int key=Arrays.binarySearch(arr2, 0, arr2.length-1, 4);
+        // System.out.println(key);
+        int []arr3={1,5,6,4,3,2,1};
+        selectionSort(arr3);
+        printArray(arr3);
     }
 }
