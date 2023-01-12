@@ -84,7 +84,6 @@ public class sort {
             }
     }   
     //leetcode 283:
-    
     /*  Problem 32:
         Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
         Note that you must do this in-place without making a copy of the array.
@@ -101,6 +100,45 @@ public class sort {
                 }
             }
         }
+    }
+    //better solution--> moving non zeroes elements to left
+    public static void moveZeroesSol2(int[] nums) {
+        
+        int pos=0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]!=0){
+                swap(nums,pos,i);
+                pos++;
+            }
+            
+        }
+    }
+    // problem 33:
+    public static void rotateArray(int []nums, int k) {
+        int startIndex=0;
+        int targetIndex=(startIndex+k)%nums.length;
+        int temp1=nums[startIndex];
+        int temp2=0;
+        int i=0;
+        while(i<nums.length && k!=nums.length && k>0 && nums.length>1){
+            if(targetIndex!=startIndex){
+                temp2=nums[targetIndex];
+                System.out.println("If: temp1: "+temp1+" temp2: "+temp2+" targetIndex: "+targetIndex);
+                nums[targetIndex]=temp1;
+                temp1=temp2;
+                targetIndex=(targetIndex+k)%nums.length;
+            }else{
+                temp2=nums[targetIndex+1];
+                System.out.println("Else: temp1: "+temp1+" temp2: "+temp2+" targetIndex: "+(targetIndex+1));
+                nums[targetIndex]=temp1;
+                temp1=temp2;
+                targetIndex=(targetIndex+1+k)%nums.length;
+                startIndex++;
+            }
+            
+            i++;
+        }
+        //nums[targetIndex]=temp1;
     }
     public static void printArray(int arr[]) {
         for(int i=0;i<arr.length;i++){
@@ -125,7 +163,14 @@ public class sort {
         mergeSortedArrays(a1, 4, a2, 3);
         printArray(a1);
         int a3[]={1,3,0,0,2,1,0};
+        int a4[]={1,3,0,0,2,1,0};
         moveZeroes(a3);
         printArray(a3);
+        moveZeroesSol2(a4);
+        printArray(a4);
+        int []a5={-1,-100,3,99};
+        int []a6={1,2,1,4,1,6};
+        rotateArray(a6, 2);
+        printArray(a6);
     }
 }
