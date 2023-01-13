@@ -138,7 +138,25 @@ public class sort {
             
             i++;
         }
-        //nums[targetIndex]=temp1;
+    }
+
+    //Problem 34: Check if the given array is sorted or not.
+    public static boolean checkSortedAndRotated(int[] nums) {
+        int i=0;
+        int largerElementCount=0; //counts that pair  such that current element is bigger than next elment.
+        while(i<nums.length){
+            if(nums[i]>nums[(i+1)%nums.length]){
+                largerElementCount++;
+            }
+            i++;
+        }
+        if(largerElementCount==1){ //[4,5,1,2,3] --> one 1 pair exists like (5,1)
+            return true;
+        }else if(largerElementCount==0){ //means no pair is found whose first elemnt is larger than the second element like [1,1,1,1]
+            return true;
+        }else{ //[3,5,7,1,6]--> more than one pair exists like (7,1) and (6,3)
+            return false;
+        }
     }
     public static void printArray(int arr[]) {
         for(int i=0;i<arr.length;i++){
@@ -172,5 +190,8 @@ public class sort {
         int []a6={1,2,1,4,1,6};
         rotateArray(a6, 2);
         printArray(a6);
+        int a7[]={2,3,1,3};
+        boolean res=checkSortedAndRotated(a7);
+        System.out.println(res);
     }
 }
