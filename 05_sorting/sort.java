@@ -158,6 +158,58 @@ public class sort {
             return false;
         }
     }
+    //Problem 35:
+    //Find sum of two arrays
+    public static int[] findArraySum(int[] a, int n, int[] b, int m) {
+        int size=Math.max(n, m);
+		int []res =new int[size+1];
+        int i=a.length-1;
+        int j=b.length-1;
+        int k=res.length-1;
+        int sum=0;
+        int reminder=0;
+        while(i>=0 && j>=0){
+            // printArray(res);
+            // System.out.println("i: "+i+" j: "+j);
+            sum=a[i]+b[j]+reminder;
+            res[k]= sum%10;
+            reminder=sum/10;
+            i--;
+            j--;
+            k--;
+        }
+        if(i<0){
+            while(j>=0){
+                sum=b[j]+reminder;
+                res[k]=sum%10;
+                reminder=sum/10;
+                j--;
+                k--; 
+            }   
+        }else if(j<0){
+            while(i>=0){
+                sum=a[i]+reminder;
+                res[k]=sum%10;
+                reminder=sum/10;
+                i--;
+                k--; 
+            }   
+        }
+        if(reminder!=0){
+            res[0]=reminder;
+        }
+        //-------------------
+        if(res[0]==0){
+            int []result=new int[res.length-1];
+            for(i=1;i<res.length;i++){
+                result[i-1]=res[i];
+            }
+            return result;
+        }else{
+            return res;
+        }
+        
+	}
     public static void printArray(int arr[]) {
         for(int i=0;i<arr.length;i++){
             System.out.print(arr[i]+" ");
@@ -193,5 +245,9 @@ public class sort {
         int a7[]={2,3,1,3};
         boolean res=checkSortedAndRotated(a7);
         System.out.println(res);
+        int a[]={9,9};
+        int b[]={9,9};
+        int[]sum=findArraySum(a, 2, b, 2);
+        printArray(sum);
     }
 }
