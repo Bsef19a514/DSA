@@ -48,9 +48,58 @@ public class strings {
         }
         return true;
     }
+    //problem 37: Reverse order of words in a string II
+    //Example: "I love java"---> "java love I"
+    //leetcode: 186
+    public static String reverseWordsOrder(String s){
+        String[] arr=s.split(" ");
+        int i=arr.length-1;
+        String res="";
+        while(i>0){
+            res=res.concat(arr[i]);
+            res=res.concat(" ");
+            i--;
+        }
+       res= res.concat(arr[i]);
+        return res;
+    }
+    //problem 38: find the character of highest frequency in a string. if there are two chars have same highest frequency the the return that char that is smaller like from a=3,f=3 choose a.
+    //Example: "zain sattar"---> "a"
+    public static char getMaxOccuringChar(String str)
+    {
+        HashMap<Character,Integer> map=new HashMap<Character,Integer>();
+        Character character=' ';
+       
+        for (int i = 0; i < str.length(); i++) {
+            character=str.charAt(i);
+            if(map.get(character)!=null){
+                map.replace(character, map.get(character)+1);
+            }else{
+                map.put(character, 1);
+            }
+        }
+        int max=0;
+        Character maxFreqChar=' ';
+        for (Map.Entry<Character,Integer> entrySet :map.entrySet()) {
+            if(entrySet.getValue()>max){
+                max=entrySet.getValue();
+                maxFreqChar=entrySet.getKey();
+            }
+            else if(entrySet.getValue()==max){
+                if(entrySet.getKey()<maxFreqChar){
+                    maxFreqChar=entrySet.getKey();
+                }
+            }
+        }
+        return maxFreqChar;
+    }
     public static void main(String[] args) {
         boolean isValidPalindrome= isPalindrome(" ");
         System.out.println(isValidPalindrome);
+        String reversedString=reverseWordsOrder("I love java");
+        System.out.println(reversedString);
+        Character maxFreqCharacter=getMaxOccuringChar("zaiiin sattar");
+        System.out.println(maxFreqCharacter);
     }
     
 }
