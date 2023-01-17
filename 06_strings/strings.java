@@ -93,6 +93,39 @@ public class strings {
         }
         return maxFreqChar;
     }
+    //problem 39: Replace white spaces with @40.
+    public static StringBuilder replaceSpaces(StringBuilder str) {
+        StringBuilder res=new StringBuilder();;
+        Character temp=' '; 
+        for(int i=0;i<str.length();i++){
+            temp=str.charAt(i);
+            if(temp!=' '){
+                res.append(temp);
+            }else{
+                res.append("@40");
+            }
+        }
+        return res;
+    }
+    //Solution 2: inplace solution
+     //problem 39: Replace white spaces with @40.
+     public static StringBuilder replaceSpacesSol2(StringBuilder str) {
+        for (int i = 0; i < str.length(); i++) {
+            if(str.charAt(i)==' ')
+            {
+                str.replace(i, i+1, "@40");
+            }
+        }
+        return str;
+    }
+    //Problem 40: Remove all occurances of given subString from given string
+    public static String removeOccurrences(String s, String part) {
+        while(s.contains(part)){
+            System.out.println(s.contains(part));
+            s=s.replaceFirst(part, "");
+        }
+        return s;
+    }
     public static void main(String[] args) {
         boolean isValidPalindrome= isPalindrome(" ");
         System.out.println(isValidPalindrome);
@@ -100,6 +133,13 @@ public class strings {
         System.out.println(reversedString);
         Character maxFreqCharacter=getMaxOccuringChar("zaiiin sattar");
         System.out.println(maxFreqCharacter);
+        StringBuilder string=new StringBuilder();
+        string.append("Geeks for geeks ");
+        StringBuilder res=replaceSpacesSol2(string);
+        System.out.println(res);
+        String str="daabcbaabcbc";
+        String str2=removeOccurrences(str, "abc");
+        System.out.println(str2);
     }
     
 }
