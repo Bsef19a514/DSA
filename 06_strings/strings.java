@@ -126,6 +126,57 @@ public class strings {
         }
         return s;
     }
+    //problem 41: check if string s2 contains permutation of string s1 or not.
+    //("hello", "ooolleoooleh");
+    public static boolean  checkInclusion(String s1, String s2) {
+        int count1[]=new int [26];
+        int count2[]=new int [26];
+        for(int i=0;i<count1.length;i++){
+            count1[i]=0;
+            count2[i]=0;
+        }
+        for(int i=0;i<s1.length();i++){
+            count1[s1.charAt(i)-'a']+=1;
+        }
+        // for(int i=0;i<count1.length;i++){
+        //     System.out.print(count1[i]+ " ");
+        // }
+        // System.out.println();
+        // System.out.println("-----------------------");
+        int windowSize=s1.length();
+        int i=0;
+        int j=0;
+        while(i+windowSize<=s2.length())
+        {
+           // System.out.println(i);
+            while(j<(i+windowSize) && j<s2.length()){
+                // System.out.println("j: "+j+"inc count of: "+s2.charAt(j));
+                count2[s2.charAt(j)-'a']+=1;
+                j++;
+            }
+            // for(int m=0;m<count1.length;m++){
+            //     System.out.print(count2[m]+ " ");
+            // }
+            // System.out.println();
+            // System.out.println("-----------------------");
+            if(ifSame(count1,count2)){
+                return true;
+            }else{
+                count2[s2.charAt(i)-'a']-=1;
+                //System.out.println("dec count of: "+s2.charAt(i));
+                i++;
+            }
+        }
+        return false;
+    }
+    public static boolean ifSame(int[] arr1, int[] arr2){
+        for(int i=0;i<arr1.length;i++){
+            if(arr1[i]!=arr2[i]){
+                return false;
+            }
+        }
+        return true;
+    }
     public static void main(String[] args) {
         boolean isValidPalindrome= isPalindrome(" ");
         System.out.println(isValidPalindrome);
@@ -140,6 +191,8 @@ public class strings {
         String str="daabcbaabcbc";
         String str2=removeOccurrences(str, "abc");
         System.out.println(str2);
+        Boolean hasPermutation=checkInclusion("ello", "ooolleoooleh");
+        System.out.println(hasPermutation);
     }
     
 }
