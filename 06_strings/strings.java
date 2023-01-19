@@ -177,6 +177,144 @@ public class strings {
         }
         return true;
     }
+    //problem 43: Remove duplicates from string s until no diplicate is left in string.
+    //leetcode 1047:
+    public static String removeDuplicates(String s) {
+        int i=0;
+        int j=i+1;
+        Character c1;
+        Character c2;
+        int lastIndex=i;
+        while(j<s.length()){
+            c1=s.charAt(i);
+            c2=s.charAt(j);
+            if(c1==c2){
+                s=s.replaceFirst(c1.toString()+c2.toString(), "");
+                i=lastIndex;
+                if(lastIndex>0){
+                    lastIndex--;
+                }
+                
+                j=i+1;
+            }else{
+                //aabc
+                //abbc
+                //abccba
+                lastIndex=i;
+                i++;
+                j++;
+            }
+        }
+        return s;
+    }
+    //using stack
+    public static String removeDuplicatesSol2(String s) {
+        Stack<Integer> stack=new Stack<Integer>();
+        stack.push(0);
+        int i=1;
+        Character c1;
+        Character c2;
+        //abccbaa
+        while(i<s.length()&&i>=0){
+            System.out.println("Stack top index: "+stack.peek());
+            c1=s.charAt(stack.peek());
+            c2=s.charAt(i);
+            if(c1==c2){
+                System.out.println("c1: "+c1+" c2 at i: "+i+" is:"+c2);
+                s=s.replaceFirst(c1.toString()+c2.toString(), "");
+                i=stack.pop();
+                if(stack.empty()){
+                    stack.push(i);
+                    i++;
+                }
+                // stack.push(i);
+                // i++;
+            }else{
+                stack.push(i);
+                i++;
+            }
+        }
+        return s;
+    }
+    //Problem 44: String compression
+    //leetcode 443:
+     public static int compress(char[] chars) {
+        int group=0;
+        int ptr=0;
+        int charCount=1;
+        int size=0;
+        int i=1;
+        int rem=0;
+        Stack<Integer> reminders= new Stack<Integer>();
+        //{'a','a','a','b','d','d'}
+        while(i<chars.length){
+            //System.out.print("group= "+chars[group]+" i= "+i+" char= "+chars[i]); 
+            if(chars[group]==chars[i]){
+                charCount++;
+            }else{
+                chars[ptr]=chars[group];
+                ptr++;
+                size++;
+                if(charCount>1){
+                    if(charCount<10){
+                        chars[ptr]=Character.forDigit(charCount, 10);
+                        size++;
+                        ptr++;
+                    }else{
+                        while(charCount!=0){
+                            rem=charCount%10;
+                            reminders.push(rem);
+                            charCount=charCount/10;
+                        }while(!reminders.isEmpty()){
+                            chars[ptr]=Character.forDigit(reminders.pop(), 10);
+                            ptr++;
+                            size++;
+                        }
+                    }
+                }
+                group=i;
+                charCount=1;
+            }
+            //System.out.println(" size= "+size+" count= "+charCount);
+            i++;
+        }
+        //-----------------------//
+        chars[ptr]=chars[group];
+                ptr++;
+                size++;
+                if(charCount>1){
+                    if(charCount<10){
+                        chars[ptr]=Character.forDigit(charCount, 10);
+                        size++;
+                        ptr++;
+                    }else{
+                        while(charCount!=0){
+                            rem=charCount%10;
+                            reminders.push(rem);
+                            charCount=charCount/10;
+                        }while(!reminders.isEmpty()){
+                            chars[ptr]=Character.forDigit(reminders.pop(), 10);
+                            ptr++;
+                            size++;
+                        }
+                        // chars[ptr]=Character.forDigit(quo, 10);
+                        // ptr++;
+                        // size++;
+                        // chars[ptr]=Character.forDigit(rem, 10);
+                        // ptr++;
+                        // size++;
+                    }
+                }
+                group=i;
+                charCount=1;
+        return size;
+    }
+    public static void printArray(char[] array, int size) {
+        for (int i = 0; i < size; i++) {
+            System.out.print(array[i]+",");
+        }
+        System.out.println();
+    }
     public static void main(String[] args) {
         boolean isValidPalindrome= isPalindrome(" ");
         System.out.println(isValidPalindrome);
@@ -193,6 +331,12 @@ public class strings {
         System.out.println(str2);
         Boolean hasPermutation=checkInclusion("ello", "ooolleoooleh");
         System.out.println(hasPermutation);
+        String s2=removeDuplicatesSol2("abccbaa");
+        System.out.println(s2);
+        char arr[]={'a','a','a','b','d','d'};
+        int length=compress(arr);
+        printArray(arr, length);
+        System.out.println(length);
     }
     
 }
