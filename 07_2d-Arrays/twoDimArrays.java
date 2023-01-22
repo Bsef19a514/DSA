@@ -153,18 +153,33 @@ public class twoDimArrays {
         }
         return false;
     }
+    //not a good solution in terms of logic + time complexity
     public static boolean searchMatrixSol2(int[][] matrix, int target) {
-        int row=0;
-        int col=matrix[0].length-1;   
-        int element=0; 
-        while(row<matrix.length&&col>=0){
-            element=matrix[row][col];
+        int s_row=0;
+        int e_row=matrix.length-1;
+        int s_col=0;
+        int e_col=matrix[0].length-1;
+        boolean isFound=binarySearch(matrix,s_row,s_col,e_row,e_col,target);
+        return isFound;
+    }
+    public static boolean binarySearch(int[][]matrix,int s_row,int s_col,int e_row,int e_col,int target){
+        int mid_row=s_row+(e_row-s_row)/2;
+        int mid_col=s_col+(e_col-s_col)/2;
+        int element=0;
+        //System.out.println("recursive func");
+        while(s_row<=e_row &&s_col<=e_col){
+            //System.out.println("loop");
+            element=matrix[mid_row][mid_col];
             if(element==target){
                 return true;
-            }else if(target>element){
-                row++;
-            }else{
-                col--;
+            }else if(element<target){
+                Boolean f1=binarySearch(matrix, s_row, mid_col+1, mid_row, e_col, target);
+                Boolean f2=binarySearch(matrix, mid_row+1, s_col, e_row, e_col, target);
+                return (f1||f2);
+            }else if(element>target){
+                Boolean f1=binarySearch(matrix, s_row, s_col, mid_row-1, e_col, target);
+                Boolean f2=binarySearch(matrix, mid_row, s_col, e_row, mid_col-1, target);
+                return (f1||f2);
             }
         }
         return false;
@@ -201,5 +216,8 @@ public class twoDimArrays {
         int [][]a5={{-5}};
         boolean ispresent=searchMatrix(a5,-5 );
         System.out.println(ispresent);
+        int a6[][]={{1,4,7,11,15},{2,5,8,12,19},{3,6,9,16,22},{10,13,14,17,24},{18,21,23,26,30}};
+        boolean flag=searchMatrixSol2(a6, 15);
+        System.out.println(flag);
     }
 }
