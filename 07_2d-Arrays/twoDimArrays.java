@@ -75,55 +75,6 @@ public class twoDimArrays {
     //Problem 47:
     //leetcode 43:
     //You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
-    public static void rotate(int[][] matrix) {
-        int rows=matrix.length;
-        int cols=rows;
-        int size=rows*cols;
-        int count=0;
-        
-        int i=0;
-        int j=0;
-        int lastCol=cols-1;
-        int lastRow=rows-1;
-        int round=1;
-        int temp1=0;
-        int temp2=0;
-        while(count<size){
-            if(round==1){
-                temp1=matrix[i][j];
-                temp2=matrix[j][lastCol];
-                matrix[j][lastCol]=temp1;
-                count++;
-                round=2;
-            }
-            if(round==2){
-                temp1=matrix[lastCol][lastRow-j];
-                matrix[lastCol][lastRow-j]=temp2;
-                count++;
-                round=3;
-            }
-            if(round==3){
-                temp2=matrix[lastRow-j][i];
-                matrix[lastRow-j][j]=temp1;
-                count++;
-                round=4;
-            }
-            if(round==4){
-                matrix[i][j]=temp2;
-                j++;
-                count++;
-                round=1;
-            }
-            if(j==lastCol){
-                i++;
-                j=i;
-                lastCol--;
-                //lastRow--;
-            }
-            
-        }
-
-    }
     public static void rotate90(int[][] matrix){
         int n=matrix.length;
         int size=n*n;
@@ -158,6 +109,28 @@ public class twoDimArrays {
             }
         }
     }
+    //Problem 48: Search in 2D array:
+    //leetcode 74:
+    public static boolean binarySearch2dArray(int matrix[][],int target){
+        int start=0;
+        int rows=matrix.length;
+        int cols=matrix[0].length;
+        int end=rows*cols-1;
+        int mid=start+(end-start)/2;
+        int element=0;
+        while(start<=end){
+            element=matrix[mid/cols][mid%cols];
+            if(element==target){
+                return true;
+            }else if(element<target){
+                start=mid+1;
+            }else{
+                end=mid-1;
+            }
+            mid=start+(end-start)/2;
+        }
+        return false;
+    }
     public static  void print2DArray(int[][]matrix){
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
@@ -181,8 +154,11 @@ public class twoDimArrays {
         System.out.println();
         System.out.println("-------------");
         int [][]arr3={{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15},{16,17,18,19,20},{21,22,23,24,25}};
-        //int [][]arr2={{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
         rotate90(arr3);
         print2DArray(arr3);
+        System.out.println("-------------");
+        int [][]arr4={{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
+        boolean isFound=binarySearch2dArray(arr4, 1);
+        System.out.println(isFound);
     }
 }
