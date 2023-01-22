@@ -131,6 +131,44 @@ public class twoDimArrays {
         }
         return false;
     }
+    //Problem 48:
+    //leetcode 240:
+    //Write an efficient algorithm that searches for a value target in an m x n integer matrix matrix. This matrix has the following properties:
+        //Integers in each row are sorted in ascending from left to right.
+        //Integers in each column are sorted in ascending from top to bottom.
+    //Sol1: selecting top right element first
+    public static boolean searchMatrix(int[][] matrix, int target) {
+        int row=0;
+        int col=matrix[0].length-1;   
+        int element=0; 
+        while(row<matrix.length&&col>=0){
+            element=matrix[row][col];
+            if(element==target){
+                return true;
+            }else if(target>element){
+                row++;
+            }else{
+                col--;
+            }
+        }
+        return false;
+    }
+    public static boolean searchMatrixSol2(int[][] matrix, int target) {
+        int row=0;
+        int col=matrix[0].length-1;   
+        int element=0; 
+        while(row<matrix.length&&col>=0){
+            element=matrix[row][col];
+            if(element==target){
+                return true;
+            }else if(target>element){
+                row++;
+            }else{
+                col--;
+            }
+        }
+        return false;
+    }
     public static  void print2DArray(int[][]matrix){
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
@@ -160,5 +198,8 @@ public class twoDimArrays {
         int [][]arr4={{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
         boolean isFound=binarySearch2dArray(arr4, 1);
         System.out.println(isFound);
+        int [][]a5={{-5}};
+        boolean ispresent=searchMatrix(a5,-5 );
+        System.out.println(ispresent);
     }
 }
